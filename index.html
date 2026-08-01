@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Friendship Day, Sunaina! 💖</title>
+  <meta name="description" content="A special personal interactive digital dedication for Sunaina, coded with love by Rajiv.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+
+  <!-- CDNs -->
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            handwriting: ['"Caveat"', 'cursive'],
+            cursive: ['"Satisfy"', 'cursive'],
+            bouncy: ['"Fredoka One"', 'cursive'],
+          },
+          boxShadow: {
+            'glow-pink': '0 0 25px rgba(244, 63, 94, 0.45)',
+            'glow-gold': '0 0 25px rgba(245, 158, 11, 0.45)',
+            'glow-purple': '0 0 25px rgba(139, 92, 246, 0.45)',
+            'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;700&family=Satisfy&family=Fredoka+One&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS Styles -->
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #faf8f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f43f5e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #fb7185;
+    }
+
+    /* Mesh Gradient Background Animation */
+    @keyframes gradient-mesh {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .mesh-gradient-bg {
+      background: linear-gradient(-45deg, #f472b6, #fb7185, #f59e0b, #5b21b6, #fda4af, #fca5a5);
+      background-size: 400% 400%;
+      animation: gradient-mesh 18s ease infinite;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    /* Polaroid Layout styling */
+    .gallery-card {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    /* Letter folding paper look */
+    .paper-texture {
+      background-color: #faf6ee;
+      background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0), radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+    }
+
+    /* Audio visualizer bounce */
+    @keyframes bounce-bar {
+      0%, 100% { transform: scaleY(0.2); }
+      50% { transform: scaleY(1); }
+    }
+    .viz-bar {
+      transform-origin: bottom;
+      animation: bounce-bar 0.7s ease-in-out infinite;
+    }
+    .viz-bar:nth-child(2) { animation-delay: 0.1s; animation-duration: 0.5s; }
+    .viz-bar:nth-child(3) { animation-delay: 0.2s; animation-duration: 0.8s; }
+    .viz-bar:nth-child(4) { animation-delay: 0.35s; animation-duration: 0.6s; }
+
+    /* Custom sticker tags rotate */
+    .sticker-rotate-1 { transform: rotate(-8deg); }
+    .sticker-rotate-2 { transform: rotate(5deg); }
+
+    /* 3D Flip Card Styles */
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+
+    /* Floating micro animations (Y-axis only to blend with GSAP X-axis mouse tracking) */
+    @keyframes float-y-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    @keyframes float-y-fast {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-24px); }
+    }
+    .animate-float-slow {
+      animation: float-y-slow 6s ease-in-out infinite;
+    }
+    .animate-float-fast {
+      animation: float-y-fast 4.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="mesh-gradient-bg font-sans text-slate-800 antialiased min-h-screen relative flex flex-col justify-between overflow-x-hidden">
+
+  <!-- Interactive HTML5 Canvas Particle System -->
+  <canvas id="bg-particles" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+  <!-- Diagonally Opposite Ambient Glowing Glass Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[35rem] h-[35rem] rounded-full bg-[#FFD700]/15 blur-[120px] opacity-35 pointer-events-none animate-pulse z-0" style="animation-duration: 8s;"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[35rem] h-[35rem] rounded-full bg-[#FF2E93]/15 blur-[120px] opacity-35 pointer-events-none animate-pulse z-0" style="animation-duration: 6s;"></div>
+
+
+
+  <!-- Floating Parallax Element Containers (Mouse-tracked, moving in opposition for depth) -->
+  <!-- ☕ Chai Cup -->
+  <div class="parallax-item-slow absolute top-[15%] left-[8%] pointer-events-none z-10 animate-trigger">
+    <div class="bg-white/60 p-2.5 md:p-3 rounded-full shadow-lg text-xl md:text-2xl animate-float-slow">☕</div>
+  </div>
+  <!-- 📱 Instagram Reel/Meme -->
+  <div class="parallax-item-fast absolute top-[20%] right-[10%] pointer-events-none z-10 animate-trigger">
+    <div class="bg-white/60 p-2.5 md:p-3 rounded-full shadow-lg text-2xl md:text-3xl animate-float-fast">📱</div>
+  </div>
+  <!-- ✨ Glowing Sparkle (Left) -->
+  <div class="parallax-item-slow absolute top-[40%] left-[5%] pointer-events-none z-10 animate-pulse hidden sm:block">
+    <div class="bg-white/50 p-2 rounded-full shadow-md text-lg text-amber-400">✨</div>
+  </div>
+  <!-- ✨ Glowing Sparkle (Right) -->
+  <div class="parallax-item-fast absolute top-[35%] right-[6%] pointer-events-none z-10 animate-pulse hidden sm:block">
+    <div class="bg-white/50 p-2 rounded-full shadow-md text-lg text-amber-400">✨</div>
+  </div>
+  <!-- ✈️ Paper Airplane with motion trail -->
+  <div class="parallax-item-slow absolute top-[28%] left-[15%] pointer-events-none z-10 hidden sm:block">
+    <div class="relative animate-float-slow flex items-center gap-1">
+      <svg class="w-16 h-8 stroke-white/40 fill-none" viewBox="0 0 100 50">
+        <path d="M10,40 Q50,15 90,30" stroke-dasharray="4,4" stroke-width="2" />
+      </svg>
+      <span class="text-2xl select-none -translate-y-2">✈️</span>
+    </div>
+  </div>
+  <!-- 🍜 Maggi Bowl -->
+  <div class="parallax-item-slow absolute bottom-[18%] right-[12%] pointer-events-none z-10 hidden sm:block">
+    <div class="bg-white/60 p-3 rounded-full shadow-lg text-2xl animate-float-slow">🍜</div>
+  </div>
+  <!-- 🎬 Cinema clapper -->
+  <div class="parallax-item-fast absolute top-[55%] right-[5%] pointer-events-none z-10 hidden md:block">
+    <div class="bg-white/60 p-2.5 rounded-full shadow-lg text-xl animate-float-fast">🎬</div>
+  </div>
+  <!-- 🍕 Pizza clapper -->
+  <div class="parallax-item-slow absolute bottom-[25%] left-[10%] pointer-events-none z-10 hidden lg:block">
+    <div class="bg-white/60 p-3 rounded-full shadow-lg text-2xl animate-float-slow">🍕</div>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <main class="flex-grow z-10 w-full">
+
+    <!-- HERO SECTION -->
+    <header class="min-h-screen relative flex flex-col justify-center items-center px-4 overflow-hidden text-center py-20">
+      
+      <!-- Top Badge -->
+      <div class="bg-white/80 py-1.5 px-4 rounded-full border border-rose-200 text-rose-500 shadow-sm text-xs md:text-sm font-bold tracking-wider uppercase mb-6 flex items-center gap-2 animate-bounce">
+        <i data-lucide="sparkles" class="w-4 h-4 text-rose-500 animate-spin" style="animation-duration: 4s;"></i>
+        ✨ A Very Special Dedicated Experience
+      </div>
+
+      <!-- Playful Large Animated Title (Liquid Gradient) -->
+      <h1 id="heroTitle" class="font-bouncy text-5xl sm:text-7xl md:text-9xl tracking-normal mb-4 cursor-default select-none flex flex-wrap justify-center items-center gap-3">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-500 to-purple-600 drop-shadow-md">SUNAINA!</span>
+        <span class="inline-block text-rose-500 select-none animate-pulse">💖</span>
+      </h1>
+
+      <!-- Rajiv Subheading (Interactive Hover) -->
+      <p class="text-lg md:text-2xl text-slate-700 font-medium max-w-xl mb-4 relative z-30 select-none">
+        A dedicated friendship page coded with love by 
+        <span id="creatorRajiv" class="relative inline-block font-cursive text-2xl text-rose-600 font-bold underline decoration-wavy decoration-rose-300 cursor-pointer">
+          Rajiv
+          <!-- Heart pop Tooltip -->
+          <span id="creatorTooltip" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-slate-900/90 backdrop-blur-md border border-white/10 text-white text-[10px] font-sans font-semibold rounded-lg shadow-lg whitespace-nowrap opacity-0 scale-90 pointer-events-none transition-all duration-300">
+            Rajiv: Your Favorite Headache ☕
+          </span>
+        </span>
+      </p>
+
+      <!-- Typed.js Taglines in a high-contrast glowing glass capsule -->
+      <div class="inline-block bg-slate-900/45 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full shadow-inner text-white max-w-xl min-h-[52px] h-[52px] mb-8 select-none flex items-center justify-center gap-2">
+        <span id="typedSubtitle" class="text-xs sm:text-sm md:text-base font-semibold tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] text-rose-200"></span>
+      </div>
+
+      <!-- INTERACTIVE SURPRISE WIDGET -->
+      <div id="experienceUnlockWrapper" class="mt-4 mb-8 z-20 relative">
+        <button id="experienceUnlockBtn" class="group relative px-8 py-4 bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 hover:brightness-110 text-white font-extrabold text-sm md:text-base rounded-full shadow-lg hover:shadow-glow-pink active:scale-95 transition-all flex items-center gap-3 uppercase tracking-wider">
+          <span>Tap to Start the Experience 🎁</span>
+          <i data-lucide="sparkles" class="w-5 h-5 text-white animate-spin" style="animation-duration: 3s;"></i>
+        </button>
+      </div>
+
+      <!-- "WHY SUNAINA IS ONE OF A KIND" GRID (Initially Hidden) -->
+      <div id="quotesGrid" class="hidden opacity-0 w-full max-w-2xl mx-auto mt-4 px-2 relative z-20">
+        <h2 class="font-bouncy text-rose-500 text-xl md:text-2xl mb-8 flex items-center justify-center gap-2">
+          ✨ Why Sunaina is One of a Kind
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          
+          <!-- Card 1 -->
+          <div class="card-3d-container h-44 sm:h-40 w-full cursor-pointer relative" style="perspective: 1000px;">
+            <!-- Tape mockup overlay -->
+            <div class="absolute -top-3 left-6 w-16 h-5 bg-rose-300/35 backdrop-blur-[1px] rotate-[-6deg] border border-rose-300/10 shadow-sm z-30 pointer-events-none"></div>
+            <div class="card-3d-inner w-full h-full relative transform-style-3d">
+              <!-- Front Side (Locked) -->
+              <div class="card-3d-front absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-white/50 backface-hidden shadow-sm">
+                <div class="p-2 bg-rose-100/60 rounded-full text-rose-500 text-lg">🔒</div>
+                <p class="font-bouncy text-sm text-slate-700">Fact #1: Her Superpower</p>
+                <button class="px-4 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-transform flex items-center gap-1.5 shadow-sm">
+                  <span>Tap to Unlock Fact</span> <i data-lucide="sparkles" class="w-3 h-3"></i>
+                </button>
+              </div>
+              <!-- Back Side (Unlocked note) -->
+              <div class="card-3d-back absolute inset-0 paper-texture rounded-2xl p-5 border-l-8 border-rose-500 flex flex-col justify-center items-center text-center backface-hidden shadow-md rotate-y-180">
+                <p class="font-handwriting text-slate-800 text-lg md:text-xl font-bold leading-relaxed px-2">
+                  "Always has the best advice even when her own life is completely chaotic! 🌀"
+                </p>
+                <p class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-bold select-none">- Rajiv ☕</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card-3d-container h-44 sm:h-40 w-full cursor-pointer relative" style="perspective: 1000px;">
+            <!-- Tape mockup overlay -->
+            <div class="absolute -top-3 left-6 w-16 h-5 bg-amber-300/35 backdrop-blur-[1px] rotate-[4deg] border border-amber-300/10 shadow-sm z-30 pointer-events-none"></div>
+            <div class="card-3d-inner w-full h-full relative transform-style-3d">
+              <!-- Front Side (Locked) -->
+              <div class="card-3d-front absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-white/50 backface-hidden shadow-sm">
+                <div class="p-2 bg-amber-100/60 rounded-full text-amber-600 text-lg">🔒</div>
+                <p class="font-bouncy text-sm text-slate-700">Fact #2: Late Night Cravings</p>
+                <button class="px-4 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-transform flex items-center gap-1.5 shadow-sm">
+                  <span>Tap to Unlock Fact</span> <i data-lucide="sparkles" class="w-3 h-3"></i>
+                </button>
+              </div>
+              <!-- Back Side (Unlocked note) -->
+              <div class="card-3d-back absolute inset-0 paper-texture rounded-2xl p-5 border-l-8 border-rose-500 flex flex-col justify-center items-center text-center backface-hidden shadow-md rotate-y-180">
+                <p class="font-handwriting text-slate-800 text-lg md:text-xl font-bold leading-relaxed px-2">
+                  "The ultimate partner-in-crime for late-night cravings and random food orders! 🍕"
+                </p>
+                <p class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-bold select-none">- Rajiv ☕</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card-3d-container h-44 sm:h-40 w-full cursor-pointer relative" style="perspective: 1000px;">
+            <!-- Tape mockup overlay -->
+            <div class="absolute -top-3 left-6 w-16 h-5 bg-purple-300/35 backdrop-blur-[1px] rotate-[-5deg] border border-purple-300/10 shadow-sm z-30 pointer-events-none"></div>
+            <div class="card-3d-inner w-full h-full relative transform-style-3d">
+              <!-- Front Side (Locked) -->
+              <div class="card-3d-front absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-white/50 backface-hidden shadow-sm">
+                <div class="p-2 bg-purple-100/60 rounded-full text-purple-600 text-lg">🔒</div>
+                <p class="font-bouncy text-sm text-slate-700">Fact #3: Bollywood Mode</p>
+                <button class="px-4 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-transform flex items-center gap-1.5 shadow-sm">
+                  <span>Tap to Unlock Fact</span> <i data-lucide="sparkles" class="w-3 h-3"></i>
+                </button>
+              </div>
+              <!-- Back Side (Unlocked note) -->
+              <div class="card-3d-back absolute inset-0 paper-texture rounded-2xl p-5 border-l-8 border-rose-500 flex flex-col justify-center items-center text-center backface-hidden shadow-md rotate-y-180">
+                <p class="font-handwriting text-slate-800 text-lg md:text-xl font-bold leading-relaxed px-2">
+                  "Can turn any normal situation into a full-blown dramatic Bollywood scene! 💅"
+                </p>
+                <p class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-bold select-none">- Rajiv ☕</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card-3d-container h-44 sm:h-40 w-full cursor-pointer relative" style="perspective: 1000px;">
+            <!-- Tape mockup overlay -->
+            <div class="absolute -top-3 left-6 w-16 h-5 bg-cyan-300/35 backdrop-blur-[1px] rotate-[5deg] border border-cyan-300/10 shadow-sm z-30 pointer-events-none"></div>
+            <div class="card-3d-inner w-full h-full relative transform-style-3d">
+              <!-- Front Side (Locked) -->
+              <div class="card-3d-front absolute inset-0 glass-card rounded-2xl p-5 flex flex-col justify-between items-center text-center border border-white/50 backface-hidden shadow-sm">
+                <div class="p-2 bg-cyan-100/60 rounded-full text-cyan-600 text-lg">🔒</div>
+                <p class="font-bouncy text-sm text-slate-700">Fact #4: Memory Vault</p>
+                <button class="px-4 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-transform flex items-center gap-1.5 shadow-sm">
+                  <span>Tap to Unlock Fact</span> <i data-lucide="sparkles" class="w-3 h-3"></i>
+                </button>
+              </div>
+              <!-- Back Side (Unlocked note) -->
+              <div class="card-3d-back absolute inset-0 paper-texture rounded-2xl p-5 border-l-8 border-rose-500 flex flex-col justify-center items-center text-center backface-hidden shadow-md rotate-y-180">
+                <p class="font-handwriting text-slate-800 text-lg md:text-xl font-bold leading-relaxed px-2">
+                  "An incredibly loyal listener who remembers details from chats from 3 years ago! 🧠✨"
+                </p>
+                <p class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-bold select-none">- Rajiv ☕</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Upgraded Bouncing Scroll Down Mouse Indicator -->
+      <a href="#letterSection" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-rose-500 transition-colors text-xs font-bold select-none z-20">
+        <span class="text-slate-600 tracking-wider uppercase text-[10px] mb-1 font-bold">Scroll Down</span>
+        <div class="w-6 h-10 border-2 border-slate-400 hover:border-rose-500 rounded-full flex justify-center p-1 transition-all">
+          <div class="w-1.5 h-2 bg-slate-400 hover:bg-rose-500 rounded-full animate-bounce"></div>
+        </div>
+      </a>
+
+    </header>
+
+    <!-- RAJIV'S LETTER SECTION -->
+    <section id="letterSection" class="py-24 px-4 max-w-4xl mx-auto text-center relative animate-trigger">
+      
+      <!-- Section Title -->
+      <div class="mb-12 reveal-up">
+        <h2 class="font-bouncy text-3xl md:text-5xl text-rose-500 mb-3 tracking-normal">
+          Rajiv's Secret Message 💌
+        </h2>
+        <p class="text-slate-600 text-sm md:text-base max-w-md mx-auto">
+          Rajiv left a handwritten note specifically for you. Open it to reveal the truths!
+        </p>
+      </div>
+
+      <!-- The Letter Paper Wrapper -->
+      <div class="relative w-full max-w-[550px] mx-auto min-h-[140px] flex items-center justify-center">
+        
+        <!-- UNOPENED STATE (Paper folded card) -->
+        <div id="unopenedLetterCard" class="w-full glass-card border border-white/60 p-8 rounded-3xl text-center shadow-glass flex flex-col items-center cursor-pointer hover:shadow-glow-pink hover:scale-105 active:scale-95 transition-all duration-300">
+          <!-- Paperclip accent -->
+          <div class="absolute -top-6 left-8 text-4xl text-rose-400 rotate-12 drop-shadow-md">📎</div>
+          
+          <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center text-red-500 text-4xl mb-4 animate-pulse">
+            💌
+          </div>
+          <h3 class="font-bouncy text-slate-800 text-lg md:text-xl mb-2">"Oye Drama Queen, Open this!"</h3>
+          <p class="text-slate-500 text-xs md:text-sm mb-6 max-w-xs">
+            A personal, non-cheesy (mostly roasting) letter from Rajiv. Click to unlock.
+          </p>
+          <button id="openLetterBtn" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold shadow-md tracking-wider uppercase text-xs active:scale-95 transition-transform flex items-center gap-2">
+            <span>Read Rajiv's Letter</span>
+            <i data-lucide="lock-open" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- OPENED LETTER STATE (Paper notebook sheet - GSAP Unfolds this) -->
+        <div id="openedLetterCard" class="w-full paper-texture rounded-2xl shadow-2xl border-l-[12px] border-rose-500/80 p-5 md:p-8 text-left relative overflow-hidden hidden" style="box-shadow: 0 20px 40px rgba(0,0,0,0.15)">
+          
+          <!-- Notebook Margins & Binder rings visual -->
+          <div class="absolute top-0 bottom-0 left-0 w-[1px] bg-red-300/60 ml-2"></div>
+          <div class="absolute top-8 right-6 text-slate-300 font-bold select-none text-xs">Date: 01.08.2026</div>
+
+          <!-- Paperclip accent -->
+          <div class="absolute -top-5 left-10 text-5xl text-rose-400 rotate-12 drop-shadow-md z-20 select-none">📎</div>
+
+          <!-- Cursive Letter Contents -->
+          <div class="relative z-10 font-handwriting text-slate-800 text-base sm:text-lg md:text-xl space-y-4 sm:space-y-5 leading-loose">
+            <div class="font-cursive text-3xl text-rose-600 font-bold border-b border-rose-100 pb-2 mb-6">
+              Oye Sunaina,
+            </div>
+            <p>
+              Happy Friendship Day, you absolute drama queen! 💖
+            </p>
+            <p>
+              I was going through some of our old screenshots and chats today, and it hit me—how on earth have we survived another year of absolute chaos without driving each other insane? 
+            </p>
+            <p>
+              From solving all our life crises over cutting chai at the tapri to laughing like absolute idiots at 2 AM over stupid Instagram reels, our conversations make zero sense to anyone else, but they are easily the best part of my week. 
+            </p>
+            <p>
+              I still remember the time we made late-night Maggi, got distracted, and somehow managed to burn the pan. Yet, we ate it like it was a gourmet meal from a Michelin-star restaurant. Or that legendary road trip where we got lost, ended up in the middle of nowhere, and just ate street food on the highway—classic us!
+            </p>
+            <p>
+              Thanks for listening to my endless rants, keeping my secrets safe (especially the embarrassing ones), and sharing the 1.5 brain cells that I lack. You are the truest, warmest friend I could ask for.
+            </p>
+            <p>
+              Here's to more tapri sessions, more inside jokes, and more plans that we'll make with full energy and probably cancel at the last minute anyway. Stay awesome, Sunaina!
+            </p>
+            
+            <div class="text-right font-cursive text-3xl text-rose-600 mt-8 pt-4 border-t border-rose-100/50">
+              Your favorite headache,<br>
+              <span class="text-4xl font-extrabold text-rose-500">Rajiv ☕✨</span>
+            </div>
+          </div>
+
+          <!-- Cute Scribbles/Doodles -->
+          <div class="absolute bottom-2 left-6 opacity-30 text-rose-500 font-handwriting text-xs select-none">
+            *Maggi burned but still 10/10* 🍜
+          </div>
+
+          <!-- Letter Close Button -->
+          <button id="closeLetterBtn" class="mt-8 mx-auto px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full text-xs font-bold tracking-wider uppercase transition-transform active:scale-95 flex items-center gap-1.5 shadow-md">
+            <i data-lucide="corner-up-left" class="w-4 h-4"></i> Close & Fold Card
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- INDIAN FRIENDSHIP GALLERY -->
+    <section class="py-24 px-4 bg-white/35 border-y border-white/20 relative">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-16 reveal-up">
+          <h2 class="font-bouncy text-3xl md:text-5xl text-purple-600 mb-3 tracking-normal">
+            Our Chaotic Adventures 📸
+          </h2>
+          <p class="text-slate-600 text-sm md:text-base max-w-md mx-auto">
+            A showcase of our legendary moments. Every Polaroid features a guy (Rajiv) and a girl (Sunaina) hanging out.
+          </p>
+        </div>
+
+        <!-- Polaroid Memory Wall -->
+        <div class="gallery-card-grid grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto px-4 justify-center items-stretch">
+          
+          <!-- Polaroid Card 1: Tapri Chai (Guy & Girl) -->
+          <div class="flex justify-center">
+            <div class="gallery-card bg-[#faf8f5] p-4 pb-8 shadow-2xl border border-stone-200/50 rounded-sm w-[290px] max-w-full relative transition-shadow duration-300 hover:shadow-glow-gold hover:z-20">
+              <!-- Tape visual mockup -->
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-6 bg-amber-200/50 backdrop-blur-[1px] rotate-[-5deg] border border-amber-300/10 shadow-sm pointer-events-none"></div>
+              <!-- Sticker Badges -->
+              <span class="sticker-rotate-1 absolute -top-1 -right-3 bg-amber-500 text-white text-[10px] font-bold py-1 px-3.5 rounded-full shadow-md z-10 border border-amber-400 select-none">
+                10/10 VIBE 🌟
+              </span>
+              <!-- Image Area -->
+              <div class="aspect-square bg-slate-100 overflow-hidden border border-stone-200/80 mb-4 rounded-sm">
+                <img src="assets/tapri_chai.png" alt="Rajiv and Sunaina enjoying tea and Maggi at a local tapri" class="w-full h-full object-cover animate-trigger">
+              </div>
+              <!-- Caption -->
+              <div class="font-handwriting text-2xl text-slate-800 font-bold text-center">
+                Chai & Late Night Maggi 🍜
+              </div>
+              <!-- Sticky Note overlay -->
+              <div class="bg-amber-100 border border-amber-200 p-2.5 rounded-lg shadow-sm text-xs font-handwriting text-amber-900 mt-3 rotate-[2deg] select-none leading-relaxed">
+                "Dieting is a complete myth when Maggi is calling at 2 AM!"
+              </div>
+            </div>
+          </div>
+
+          <!-- Polaroid Card 2: Insta Reels (Guy & Girl) -->
+          <div class="flex justify-center">
+            <div class="gallery-card bg-[#faf8f5] p-4 pb-8 shadow-2xl border border-stone-200/50 rounded-sm w-[290px] max-w-full relative transition-shadow duration-300 hover:shadow-glow-pink hover:z-20">
+              <!-- Tape visual mockup -->
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-6 bg-rose-200/50 backdrop-blur-[1px] rotate-[3deg] border border-rose-300/10 shadow-sm pointer-events-none"></div>
+              <!-- Sticker Badges -->
+              <span class="sticker-rotate-2 absolute -top-1 -left-3 bg-rose-500 text-white text-[10px] font-bold py-1 px-3.5 rounded-full shadow-md z-10 border border-rose-400 select-none">
+                DRAMA QUEEN 💅
+              </span>
+              <!-- Image Area -->
+              <div class="aspect-square bg-slate-100 overflow-hidden border border-stone-200/80 mb-4 rounded-sm">
+                <img src="assets/insta_reels.png" alt="Rajiv and Sunaina sitting together laughing over a smartphone screen" class="w-full h-full object-cover">
+              </div>
+              <!-- Caption -->
+              <div class="font-handwriting text-2xl text-slate-800 font-bold text-center">
+                Infinite Memes & Reels 📱
+              </div>
+              <!-- Sticky Note overlay -->
+              <div class="bg-rose-100 border border-rose-200 p-2.5 rounded-lg shadow-sm text-xs font-handwriting text-rose-900 mt-3 rotate-[-3deg] select-none leading-relaxed">
+                "Our shared brain cell working at maximum capacity."
+              </div>
+            </div>
+          </div>
+
+          <!-- Polaroid Card 3: Road Trip (Guy & Girl) -->
+          <div class="flex justify-center">
+            <div class="gallery-card bg-[#faf8f5] p-4 pb-8 shadow-2xl border border-stone-200/50 rounded-sm w-[290px] max-w-full relative transition-shadow duration-300 hover:shadow-glow-purple hover:z-20">
+              <!-- Tape visual mockup -->
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-6 bg-purple-200/50 backdrop-blur-[1px] rotate-[-2deg] border border-purple-300/10 shadow-sm pointer-events-none"></div>
+              <!-- Sticker Badges -->
+              <span class="sticker-rotate-1 absolute -top-2 -right-3 bg-purple-600 text-white text-[10px] font-bold py-1 px-3.5 rounded-full shadow-md z-10 border border-purple-500 select-none">
+                BESTIE 💯
+              </span>
+              <!-- Image Area -->
+              <div class="aspect-square bg-slate-100 overflow-hidden border border-stone-200/80 mb-4 rounded-sm">
+                <img src="assets/road_trip.png" alt="Rajiv driving a jeep with Sunaina in the passenger seat on a scenic road trip" class="w-full h-full object-cover">
+              </div>
+              <!-- Caption -->
+              <div class="font-handwriting text-2xl text-slate-800 font-bold text-center">
+                Unplanned Road Trips 🚗
+              </div>
+              <!-- Sticky Note overlay -->
+              <div class="bg-purple-100 border border-purple-200 p-2.5 rounded-lg shadow-sm text-xs font-handwriting text-purple-900 mt-3 rotate-[1deg] select-none leading-relaxed">
+                "Getting lost is just another way to find good highway food!"
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FRIENDSHIP STATS / MINI-GAME SECTION -->
+    <section class="py-24 px-4 max-w-4xl mx-auto animate-trigger">
+      
+      <!-- Mini Game Dashboard -->
+      <div class="reveal-up glass-card rounded-3xl p-8 md:p-12 shadow-glass border border-white/50 relative overflow-hidden">
+        
+        <!-- Decorative background blur lines -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-rose-400/10 rounded-full blur-2xl"></div>
+
+        <div class="relative z-10 text-center">
+          
+          <h2 class="font-bouncy text-2xl md:text-4xl text-slate-800 mb-6 flex items-center justify-center gap-2">
+            ⚡ Rajiv & Sunaina Vibe Dashboard
+          </h2>
+          
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 max-w-3xl mx-auto text-left">
+            
+            <!-- Stat 1 -->
+            <div class="bg-white/50 p-5 rounded-2xl border border-white/40 shadow-sm flex items-center gap-4 animate-trigger">
+              <div class="p-3.5 bg-rose-100 text-rose-500 rounded-xl">
+                <i data-lucide="phone-call" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Late Night Call Hours</p>
+                <p class="font-bouncy text-slate-800 text-xl md:text-2xl mt-0.5">999+ Hours</p>
+              </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="bg-white/50 p-5 rounded-2xl border border-white/40 shadow-sm flex items-center gap-4">
+              <div class="p-3.5 bg-amber-100 text-amber-600 rounded-xl">
+                <i data-lucide="brain" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Brain Cells Shared</p>
+                <p class="font-bouncy text-slate-800 text-xl md:text-2xl mt-0.5">1.5 Cells</p>
+              </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="bg-white/50 p-5 rounded-2xl border border-white/40 shadow-sm flex items-center gap-4">
+              <div class="p-3.5 bg-purple-100 text-purple-600 rounded-xl">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Times Saved Rajiv</p>
+                <p class="font-bouncy text-slate-800 text-xl md:text-2xl mt-0.5">Infinity ♾️</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- High-Five Widget -->
+          <div class="bg-rose-50/50 border border-rose-100 max-w-md mx-auto p-6 rounded-2xl text-center mb-8">
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+              Every time Rajiv bugs you, tap the button below to exchange a Virtual High-Five!
+            </p>
+            <div class="font-bouncy text-rose-500 text-2xl mb-4">
+              🖐️ High-Fives: <span id="highFiveCount" class="text-slate-800">0</span>
+            </div>
+            <!-- High-Five Trigger Button -->
+            <button id="highFiveBtn" class="px-6 py-3.5 bg-rose-500 hover:bg-rose-600 text-white rounded-full font-bold shadow-md hover:shadow-glow-pink uppercase tracking-wider text-xs transition-all duration-200 flex items-center gap-2 mx-auto active:scale-90 animate-trigger">
+              <span>Send High-Five</span>
+              <i data-lucide="hand" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- GRAND CELEBRATION FINALE -->
+    <section class="py-24 px-4 text-center max-w-3xl mx-auto animate-trigger">
+      
+      <div class="reveal-up glass-card rounded-3xl p-8 md:p-12 shadow-glass border border-white/50 relative overflow-hidden">
+        
+        <div class="absolute -top-12 -left-12 w-24 h-24 bg-rose-400/10 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute -bottom-12 -right-12 w-24 h-24 bg-amber-400/10 rounded-full blur-xl animate-pulse"></div>
+
+        <i data-lucide="heart" class="w-12 h-12 text-rose-500 fill-rose-500 mx-auto mb-4 animate-bounce"></i>
+
+        <h2 class="font-bouncy text-3xl md:text-5xl text-slate-800 mb-6">
+          Let's Make More <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-purple-600 to-amber-600 animate-trigger">Chaotic Memories!</span>
+        </h2>
+        
+        <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto">
+          Happy Friendship Day, Sunaina! Let's blast the confetti, release the balloons, and play some background music to celebrate.
+        </p>
+
+        <!-- Celebrate Button -->
+        <button id="celebrateBtn" class="px-8 py-5 bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 hover:brightness-110 text-white font-extrabold text-base md:text-lg rounded-full transition-all duration-300 shadow-lg hover:shadow-glow-pink hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto uppercase tracking-widest animate-trigger">
+          🎉 Celebrate Our Friendship
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="z-10 w-full text-center py-8 text-xs text-slate-500 border-t border-white/20 glass-card mt-auto select-none">
+    <p>© 2026 Coded with ❤️ by Rajiv for Sunaina. Happy Friendship Day! ✨</p>
+  </footer>
+
+  <!-- Hidden Background Music Track -->
+  <audio id="bgMusic" src="https://files.catbox.moe/va4k8v.mp3" preload="auto" loop referrerpolicy="no-referrer"></audio>
+
+  <!-- SCRIPT ENGINE -->
+  <!-- Typed.js for sub-tagline cycling -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <script>
+    // Global Audio Reference
+    const bgMusic = document.getElementById('bgMusic');
+
+    // Bulletproof Auto-Play Logic
+    function attemptAutoplay() {
+      if (bgMusic) {
+        bgMusic.play().then(() => {
+          console.log("Autoplay successful!");
+        }).catch(err => {
+          console.log("Autoplay blocked. Playing on first user interaction.");
+          const playOnInteraction = () => {
+            bgMusic.play().then(() => {
+              document.removeEventListener('click', playOnInteraction);
+              document.removeEventListener('touchstart', playOnInteraction);
+            }).catch(e => console.log("Play failed on interaction", e));
+          };
+          document.addEventListener('click', playOnInteraction);
+          document.addEventListener('touchstart', playOnInteraction);
+        });
+      }
+    }
+    attemptAutoplay();
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Dynamic background canvas particle loop
+    const canvas = document.getElementById('bg-particles');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      let mouse = { x: null, y: null };
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      window.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      class Particle {
+        constructor() {
+          this.reset();
+          this.y = Math.random() * height;
+        }
+        reset() {
+          this.x = Math.random() * width;
+          this.y = height + Math.random() * 80;
+          this.size = Math.random() * 5 + 2.5;
+          this.speedY = -(Math.random() * 0.9 + 0.3);
+          this.speedX = Math.random() * 0.6 - 0.3;
+          const colors = [
+            'rgba(244, 63, 94, 0.28)',  // rose
+            'rgba(245, 158, 11, 0.28)', // gold
+            'rgba(236, 72, 153, 0.22)',  // pink
+            'rgba(139, 92, 246, 0.18)'  // violet
+          ];
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+          this.type = Math.random() > 0.6 ? 'heart' : 'sphere';
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+          if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+            this.reset();
+          }
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = this.x - mouse.x;
+            const dy = this.y - mouse.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 120) {
+              const force = (120 - distance) / 120;
+              const angle = Math.atan2(dy, dx);
+              this.x += Math.cos(angle) * force * 4.5;
+              this.y += Math.sin(angle) * force * 4.5;
+            }
+          }
+        }
+        draw() {
+          ctx.fillStyle = this.color;
+          if (this.type === 'heart') {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.beginPath();
+            const d = this.size * 1.3;
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(-d/2, -d/2, -d, d/3, 0, d);
+            ctx.bezierCurveTo(d, d/3, d/2, -d/2, 0, 0);
+            ctx.fill();
+            ctx.restore();
+          } else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      for (let i = 0; i < 55; i++) {
+        particles.push(new Particle());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // Register GSAP scroll trigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Mouse Parallax Motion on Hero Elements (Moving in opposition for depth)
+    window.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const xPercent = (clientX / window.innerWidth - 0.5) * 2; 
+      const yPercent = (clientY / window.innerHeight - 0.5) * 2; 
+      
+      gsap.to('.parallax-item-slow', { x: -xPercent * 25, y: -yPercent * 25, duration: 1.2, ease: 'power2.out' });
+      gsap.to('.parallax-item-fast', { x: -xPercent * 50, y: -yPercent * 50, duration: 0.9, ease: 'power2.out' });
+    });
+
+    // 2. Loop Bounce Animation on Hero Title
+    gsap.to('#heroTitle', {
+      y: -12,
+      repeat: -1,
+      yoyo: true,
+      duration: 1.4,
+      ease: 'power1.inOut'
+    });
+
+    // 3. Typed.js for Cycling taglines
+    new Typed('#typedSubtitle', {
+      strings: [
+        'To the partner in crime... 🍕',
+        'To the one who never lets me eat alone... 🍜',
+        'To 3 AM late-night gossips... 💬',
+        'To the keeper of all my secrets... 🤫',
+        'To the drama queen of my life... 💅'
+      ],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 2000,
+      loop: true,
+      showCursor: true,
+      cursorChar: '|'
+    });
+
+    // 4. Interactive Hover for Rajiv Creator Tag & Heart Pop
+    const creator = document.getElementById('creatorRajiv');
+    const tooltip = document.getElementById('creatorTooltip');
+    
+    creator.addEventListener('mouseenter', (e) => {
+      gsap.to(tooltip, { opacity: 1, scale: 1, y: -6, duration: 0.3, ease: 'back.out(1.7)' });
+      
+      const rect = creator.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      
+      // Heart burst
+      for (let i = 0; i < 7; i++) {
+        spawnHeartExplosionParticle(x, y);
+      }
+    });
+
+    creator.addEventListener('mouseleave', () => {
+      gsap.to(tooltip, { opacity: 0, scale: 0.9, y: 0, duration: 0.2 });
+    });
+
+    function spawnHeartExplosionParticle(startX, startY) {
+      const el = document.createElement('div');
+      el.className = 'fixed pointer-events-none select-none text-xl z-40';
+      el.textContent = '💖';
+      el.style.left = `${startX + (Math.random() * 20 - 10)}px`;
+      el.style.top = `${startY + (Math.random() * 20 - 10)}px`;
+      document.body.appendChild(el);
+      
+      gsap.to(el, {
+        y: -90 - Math.random() * 50,
+        x: Math.random() * 80 - 40,
+        rotation: Math.random() * 120 - 60,
+        opacity: 0,
+        scale: 1.5,
+        duration: 1 + Math.random() * 0.4,
+        ease: 'power2.out',
+        onComplete: () => el.remove()
+      });
+    }
+
+    // 5. Synthesizer Chime Sound using Web Audio API
+    function playUnlockChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        // Pentatonic arpeggio (C major pentatonic chords)
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99]; // C4, E4, G4, C5, E5, G5
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
+          
+          gain.gain.setValueAtTime(0.2, ctx.currentTime + idx * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.1 + 0.8);
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.start(ctx.currentTime + idx * 0.1);
+          osc.stop(ctx.currentTime + idx * 0.1 + 0.85);
+        });
+      } catch (err) {
+        console.log("AudioContext blocked or not supported", err);
+      }
+    }
+
+    // 6. Interactive Hero Experience Unlock Widget
+    const unlockBtn = document.getElementById('experienceUnlockBtn');
+    const unlockWrapper = document.getElementById('experienceUnlockWrapper');
+    const quotesGrid = document.getElementById('quotesGrid');
+
+    unlockBtn.addEventListener('click', () => {
+      // Play Synthesizer Chime
+      playUnlockChime();
+
+      // Play background music loop automatically on unlock interaction
+      if (bgMusic && bgMusic.paused) {
+        bgMusic.play().catch(err => console.log("Audio play blocked by browser policy.", err));
+      }
+
+      // Confetti burst
+      const rect = unlockBtn.getBoundingClientRect();
+      confetti({
+        origin: { x: (rect.left + rect.right) / 2 / window.innerWidth, y: (rect.top + rect.bottom) / 2 / window.innerHeight },
+        particleCount: 50,
+        spread: 75,
+        colors: ['#F43F5E', '#F59E0B', '#8B5CF6']
+      });
+
+      // Fade out unlock button
+      gsap.to(unlockWrapper, {
+        opacity: 0,
+        y: -15,
+        scale: 0.92,
+        duration: 0.4,
+        ease: 'power2.in',
+        onComplete: () => {
+          unlockWrapper.classList.add('hidden');
+          
+          // Reveal Quotes Grid with staggered animation
+          quotesGrid.classList.remove('hidden');
+          gsap.timeline()
+            .to(quotesGrid, { opacity: 1, duration: 0.3 })
+            .fromTo('#quotesGrid .card-3d-container', 
+              { scale: 0.75, y: 35, opacity: 0 },
+              { scale: 1, y: 0, opacity: 1, stagger: 0.15, duration: 0.85, ease: 'back.out(1.25)' }
+            );
+        }
+      });
+    });
+
+    // 7. Interactive 3D Tilt Cards with Confetti
+    const quoteCards = document.querySelectorAll('.card-3d-container');
+    quoteCards.forEach(card => {
+      const inner = card.querySelector('.card-3d-inner');
+      
+      // Tap/Click to Flip
+      card.addEventListener('click', () => {
+        const isFlipped = card.classList.contains('flipped');
+        
+        if (!isFlipped) {
+          card.classList.add('flipped');
+          gsap.to(inner, { rotateY: 180, duration: 0.6, ease: 'power2.out' });
+          
+          // Confetti burst locally
+          const rect = card.getBoundingClientRect();
+          confetti({
+            origin: { x: (rect.left + rect.right) / 2 / window.innerWidth, y: (rect.top + rect.bottom) / 2 / window.innerHeight },
+            particleCount: 20,
+            spread: 45,
+            colors: ['#F43F5E', '#F59E0B', '#8B5CF6']
+          });
+        } else {
+          card.classList.remove('flipped');
+          gsap.to(inner, { rotateY: 0, duration: 0.6, ease: 'power2.out' });
+        }
+      });
+
+      // 3D Mouse Tilt Hover (handles both flipped and unflipped rotations)
+      card.addEventListener('mousemove', (e) => {
+        const isFlipped = card.classList.contains('flipped');
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        let rotX = -y * 0.12;
+        let rotY = x * 0.12;
+        if (isFlipped) {
+          rotY = 180 + (x * 0.12);
+        }
+        
+        gsap.to(inner, {
+          rotateY: rotY,
+          rotateX: rotX,
+          transformPerspective: 1000,
+          scale: 1.05,
+          boxShadow: '0 20px 35px rgba(244, 63, 94, 0.22)',
+          ease: 'power2.out',
+          duration: 0.35
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        const isFlipped = card.classList.contains('flipped');
+        gsap.to(inner, {
+          rotateY: isFlipped ? 180 : 0,
+          rotateX: 0,
+          scale: 1,
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+          ease: 'power2.out',
+          duration: 0.45
+        });
+      });
+    });
+
+    // 8. ScrollTrigger Reveal Up for sections
+    gsap.utils.toArray('.reveal-up').forEach((elem) => {
+      gsap.from(elem, {
+        scrollTrigger: {
+          trigger: elem,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      });
+    });
+
+    // Stagger entry for Polaroid cards
+    gsap.from('.gallery-card', {
+      scrollTrigger: {
+        trigger: '.gallery-card-grid',
+        start: 'top 80%',
+        toggleActions: 'play none none none',
+      },
+      y: 60,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 1,
+      ease: 'back.out(1.5)'
+    });
+
+    // 9. Custom 3D tilt hover on Polaroid gallery cards
+    const galleryCards = document.querySelectorAll('.gallery-card');
+    galleryCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(card, {
+          rotateY: x * 0.08,
+          rotateX: -y * 0.08,
+          transformPerspective: 1000,
+          scale: 1.03,
+          ease: 'power2.out',
+          duration: 0.4
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0,
+          rotateX: 0,
+          scale: 1,
+          ease: 'power2.out',
+          duration: 0.5
+        });
+      });
+    });
+
+    // 10. GSAP Unfold Letter Animation
+    const unopenedCard = document.getElementById('unopenedLetterCard');
+    const openedCard = document.getElementById('openedLetterCard');
+    const openLetterBtn = document.getElementById('openLetterBtn');
+    const closeLetterBtn = document.getElementById('closeLetterBtn');
+
+    openLetterBtn.addEventListener('click', () => {
+      // Trigger a confetti pop
+      const rect = openLetterBtn.getBoundingClientRect();
+      confetti({
+        origin: { x: (rect.left + rect.right) / 2 / window.innerWidth, y: (rect.top + rect.bottom) / 2 / window.innerHeight },
+        particleCount: 30,
+        spread: 60,
+        colors: ['#f43f5e', '#fb7185', '#fde047']
+      });
+
+      // GSAP timeline to unfold paper
+      gsap.timeline()
+        .to(unopenedCard, { scale: 0.9, opacity: 0, duration: 0.3, onComplete: () => unopenedCard.classList.add('hidden') })
+        .fromTo(openedCard, { display: 'none', height: 0, opacity: 0, transformOrigin: 'top center', scaleY: 0 }, { display: 'block', height: 'auto', opacity: 1, scaleY: 1, duration: 0.8, ease: 'back.out(1.2)' });
+    });
+
+    closeLetterBtn.addEventListener('click', () => {
+      // GSAP fold up
+      gsap.timeline()
+        .to(openedCard, { scaleY: 0, height: 0, opacity: 0, duration: 0.5, ease: 'power2.in', onComplete: () => openedCard.classList.add('hidden') })
+        .fromTo(unopenedCard, { display: 'none', scale: 0.9, opacity: 0 }, { display: 'block', scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' });
+    });
+
+    // 11. High-Five Mini Game
+    let highFiveCount = 0;
+    const highFiveBtn = document.getElementById('highFiveBtn');
+    const highFiveCountSpan = document.getElementById('highFiveCount');
+
+    highFiveBtn.addEventListener('click', (e) => {
+      highFiveCount++;
+      highFiveCountSpan.textContent = highFiveCount;
+
+      // Small confetti burst
+      const rect = highFiveBtn.getBoundingClientRect();
+      const x = (rect.left + rect.right) / 2 / window.innerWidth;
+      const y = (rect.top + rect.bottom) / 2 / window.innerHeight;
+      confetti({
+        origin: { x, y },
+        particleCount: 20,
+        spread: 50,
+        colors: ['#f43f5e', '#f59e0b', '#3b82f6']
+      });
+
+      // Spawn custom emojis float up
+      spawnEmojiParticle(e.clientX, e.clientY);
+
+      // Bounce button scale
+      gsap.fromTo(highFiveBtn, { scale: 0.9 }, { scale: 1, duration: 0.3, ease: 'elastic.out(1, 0.3)' });
+    });
+
+    function spawnEmojiParticle(x, y) {
+      const emojis = ['🖐️', '💖', '✨', '🔥', '🥰', '🎈'];
+      const el = document.createElement('div');
+      el.className = 'fixed pointer-events-none select-none text-3xl z-40';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = `${x - 15}px`;
+      el.style.top = `${y - 15}px`;
+      document.body.appendChild(el);
+      
+      gsap.to(el, {
+        y: -120 - Math.random() * 60,
+        x: Math.random() * 120 - 60,
+        rotation: Math.random() * 90 - 45,
+        opacity: 0,
+        scale: 1.6,
+        duration: 1.3,
+        ease: 'power2.out',
+        onComplete: () => el.remove()
+      });
+    }
+
+    // 12. Balloon Spawner & Pop Engine
+    function spawnBalloon() {
+      const colors = ['#F43F5E', '#10B981', '#3B82F6', '#F59E0B', '#8B5CF6', '#EC4899'];
+      const balloon = document.createElement('div');
+      balloon.className = 'absolute bottom-0 cursor-pointer select-none z-40';
+      
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      balloon.innerHTML = `
+        <div class="relative w-16 h-20 rounded-full flex flex-col items-center" style="background-color: ${color}; box-shadow: inset -5px -10px 20px rgba(0,0,0,0.15), 0 10px 15px rgba(0,0,0,0.1)">
+          <!-- Balloon Reflection shine -->
+          <div class="absolute top-3 left-3 w-4 h-6 bg-white/30 rounded-full"></div>
+          <!-- Knot -->
+          <div class="absolute -bottom-1 w-3 h-3" style="background-color: ${color}; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+          <!-- String -->
+          <div class="w-0.5 h-16 bg-slate-400/40 absolute top-20"></div>
+        </div>
+      `;
+      
+      const startX = Math.random() * window.innerWidth;
+      const targetX = startX + (Math.random() * 240 - 120);
+      const scale = Math.random() * 0.4 + 0.8; 
+      
+      balloon.style.left = `${startX}px`;
+      balloon.style.transform = `scale(${scale})`;
+      document.body.appendChild(balloon);
+      
+      // Animate up screen
+      gsap.to(balloon, {
+        y: -(window.innerHeight + 250),
+        x: targetX,
+        rotation: Math.random() * 40 - 20,
+        duration: Math.random() * 5 + 4, // 4 to 9 seconds
+        ease: 'power1.out',
+        onComplete: () => balloon.remove()
+      });
+      
+      // Balloon Click to Pop
+      balloon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Pop particles
+        const rect = balloon.getBoundingClientRect();
+        confetti({
+          origin: { x: (rect.left + rect.right) / 2 / window.innerWidth, y: (rect.top + rect.bottom) / 2 / window.innerHeight },
+          particleCount: 20,
+          spread: 50,
+          colors: [color]
+        });
+        
+        // Scale/fade down balloon
+        gsap.to(balloon, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.15,
+          onComplete: () => balloon.remove()
+        });
+      });
+    }
+
+    // 13. Celebrate Button Trigger
+    const celebrateBtn = document.getElementById('celebrateBtn');
+    celebrateBtn.addEventListener('click', () => {
+      // 1. Confetti Cannons
+      const duration = 5 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0, y: 0.8 },
+          colors: ['#F43F5E', '#F59E0B', '#8B5CF6', '#10B981']
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 60,
+          origin: { x: 1, y: 0.8 },
+          colors: ['#F43F5E', '#F59E0B', '#8B5CF6', '#10B981']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+
+      // 2. Launch Balloon swarm
+      for(let i=0; i < 25; i++) {
+        setTimeout(spawnBalloon, i * 150);
+      }
+    });
+
+    // 14. Cozy Background Music Info (Automatically managed on interaction)
+    // (bgMusic is defined globally at the top of the script)
+  </script>
+
+</body>
+</html>
